@@ -60,11 +60,16 @@ for (let arithmeticOperator of arithmeticOperators) {
             activeValue.textContent = ''
             operator.textContent = e.target.textContent
         } else {
+            if (operator.textContent === '/' && activeValue.textContent === '0'|| activeValue.textContent === '-0' || activeValue.textContent === '-0.' || activeValue.textContent === '0.') {
+                document.querySelector('h1').textContent = '>:('
+                return;
+            }
             const result = String(operate(operator.textContent, +operand.textContent,
                 +activeValue.textContent))
             operand.textContent = result + ' '
             operator.textContent = e.target.textContent
             activeValue.textContent = ''
+            document.querySelector('h1').textContent = 'Calculator'
         }
     })
 }
@@ -72,10 +77,15 @@ for (let arithmeticOperator of arithmeticOperators) {
 equalButton.addEventListener('click', () => {
     if (operand.textContent === '' || activeValue.textContent === '' ||
         activeValue.textContent === '-') return;
+    if (operator.textContent === '/' && activeValue.textContent === '0'|| activeValue.textContent === '-0' || activeValue.textContent === '-0.' || activeValue.textContent === '0.') {
+        document.querySelector('h1').textContent = '>:('
+        return;
+    }
     const result = String(operate(operator.textContent, +operand.textContent,
         +activeValue.textContent))
     clearDisplay()
     activeValue.textContent = result
+    document.querySelector('h1').textContent = 'Calculator'
 })
 
 negativeButton.addEventListener('click', () => {
@@ -87,10 +97,10 @@ negativeButton.addEventListener('click', () => {
 })
 
 decimal.addEventListener('click', () => {
-    if(activeValue.textContent.includes('.')) return;
-    if(activeValue.textContent === '' || activeValue.textContent === '-'){
+    if (activeValue.textContent.includes('.')) return;
+    if (activeValue.textContent === '' || activeValue.textContent === '-') {
         activeValue.textContent += '0.'
-    }else{
+    } else {
         activeValue.textContent += '.'
     }
 })
