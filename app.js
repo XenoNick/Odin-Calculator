@@ -1,4 +1,5 @@
 const numbers = [...document.querySelectorAll('.numbers')]
+const activeValue = document.querySelector('#activeValue')
 
 
 const myMath = {
@@ -22,4 +23,10 @@ function operate(operator, operandX, operandY) {
     else if (operator === '*') return myMath.multiply(operandX, operandY)
     else if (operator === '/') return myMath.divide(operandX, operandY)
     return 'ERROR'
+}
+
+for (let number of numbers) {
+    number.addEventListener('click', (e) => {
+        if (activeValue.textContent.length < 20) activeValue.append(e.target.textContent)
+    })
 }
