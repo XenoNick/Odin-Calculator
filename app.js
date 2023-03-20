@@ -1,6 +1,8 @@
 const numbers = [...document.querySelectorAll('.numbers')]
 const activeValue = document.querySelector('#activeValue')
-
+const result = document.querySelector('#result')
+const clearbutton = document.querySelector('.clear')
+const deletebutton = document.querySelector('.delete')
 
 const myMath = {
     add(x, y) {
@@ -27,6 +29,18 @@ function operate(operator, operandX, operandY) {
 
 for (let number of numbers) {
     number.addEventListener('click', (e) => {
-        if (activeValue.textContent.length < 20) activeValue.append(e.target.textContent)
+        if (activeValue.textContent.length < 20) {
+            activeValue.append(e.target.textContent)
+        }
     })
 }
+
+clearbutton.addEventListener('click', () => {
+    activeValue.textContent = ''
+    result.textContent = ''
+})
+
+deletebutton.addEventListener('click', () => {
+    activeValue.textContent = activeValue.textContent
+        .slice(0, activeValue.textContent.length - 1)
+})
