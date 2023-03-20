@@ -6,6 +6,7 @@ const deletebutton = document.querySelector('.delete')
 const arithmeticOperators = [...document.querySelectorAll('.arithmetic')]
 const equalButton = document.querySelector('.equals')
 const negativeButton = document.querySelector('.negative')
+const decimal = document.querySelector('.dot')
 
 const myMath = {
     add(x, y) {
@@ -80,7 +81,16 @@ equalButton.addEventListener('click', () => {
 negativeButton.addEventListener('click', () => {
     if (activeValue.textContent.includes('-')) {
         activeValue.textContent = activeValue.textContent.slice(1)
-    }else{
+    } else {
         activeValue.textContent = '-' + activeValue.textContent
+    }
+})
+
+decimal.addEventListener('click', () => {
+    if(activeValue.textContent.includes('.')) return;
+    if(activeValue.textContent === '' || activeValue.textContent === '-'){
+        activeValue.textContent += '0.'
+    }else{
+        activeValue.textContent += '.'
     }
 })
