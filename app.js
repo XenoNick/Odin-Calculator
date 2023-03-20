@@ -1,8 +1,9 @@
 const numbers = [...document.querySelectorAll('.numbers')]
 const activeValue = document.querySelector('#activeValue')
-const result = document.querySelector('#result')
+const [operand, operator] = [...document.querySelectorAll('.expression')]
 const clearbutton = document.querySelector('.clear')
 const deletebutton = document.querySelector('.delete')
+const arithmeticOperators = [...document.querySelectorAll('.arithmetic')]
 
 const myMath = {
     add(x, y) {
@@ -37,10 +38,28 @@ for (let number of numbers) {
 
 clearbutton.addEventListener('click', () => {
     activeValue.textContent = ''
-    result.textContent = ''
+    operand.textContent = ''
+    operator.textContent = ''
 })
 
 deletebutton.addEventListener('click', () => {
     activeValue.textContent = activeValue.textContent
         .slice(0, activeValue.textContent.length - 1)
 })
+
+for (let arithmeticOperator of arithmeticOperators) {
+    arithmeticOperator.addEventListener('click', (e) => {
+        if (activeValue.textContent === '') return;
+        if (operator.textContent === '') {
+            operand.textContent = activeValue.textContent + ' '
+            activeValue.textContent = ''
+            operator.textContent = e.target.textContent
+        }else{
+            const result = String(operate(operator.textContent, +operand.textContent,
+                +activeValue.textContent))
+            operand.textContent = result + ' '
+            operator.textContent = e.target.textContent
+            activeValue.textContent = ''
+        }
+    })
+}
