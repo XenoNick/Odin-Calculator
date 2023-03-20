@@ -4,6 +4,8 @@ const [operand, operator] = [...document.querySelectorAll('.expression')]
 const clearbutton = document.querySelector('.clear')
 const deletebutton = document.querySelector('.delete')
 const arithmeticOperators = [...document.querySelectorAll('.arithmetic')]
+const equalButton = document.querySelector('.equals')
+const negativeButton = document.querySelector('.negative')
 
 const myMath = {
     add(x, y) {
@@ -36,11 +38,13 @@ for (let number of numbers) {
     })
 }
 
-clearbutton.addEventListener('click', () => {
+function clearDisplay() {
     activeValue.textContent = ''
     operand.textContent = ''
     operator.textContent = ''
-})
+}
+
+clearbutton.addEventListener('click', clearDisplay)
 
 deletebutton.addEventListener('click', () => {
     activeValue.textContent = activeValue.textContent
@@ -49,12 +53,12 @@ deletebutton.addEventListener('click', () => {
 
 for (let arithmeticOperator of arithmeticOperators) {
     arithmeticOperator.addEventListener('click', (e) => {
-        if (activeValue.textContent === '') return;
+        if (activeValue.textContent === '' || activeValue.textContent === '-') return;
         if (operator.textContent === '') {
             operand.textContent = activeValue.textContent + ' '
             activeValue.textContent = ''
             operator.textContent = e.target.textContent
-        }else{
+        } else {
             const result = String(operate(operator.textContent, +operand.textContent,
                 +activeValue.textContent))
             operand.textContent = result + ' '
@@ -63,3 +67,20 @@ for (let arithmeticOperator of arithmeticOperators) {
         }
     })
 }
+
+equalButton.addEventListener('click', () => {
+    if (operand.textContent === '' || activeValue.textContent === '' ||
+        activeValue.textContent === '-') return;
+    const result = String(operate(operator.textContent, +operand.textContent,
+        +activeValue.textContent))
+    clearDisplay()
+    activeValue.textContent = result
+})
+
+negativeButton.addEventListener('click', () => {
+    if (activeValue.textContent.includes('-')) {
+        activeValue.textContent = activeValue.textContent.slice(1)
+    }else{
+        activeValue.textContent = '-' + activeValue.textContent
+    }
+})
